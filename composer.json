@@ -1,5 +1,5 @@
 {
-    "name": "Navarr/MinecraftAPI",
+    "name": "navarr/minecraft-api",
     "type": "library",
     "description": "An API for validating a Minecraft user against Mojang's servers",
     "minimum-stability": "stable",
