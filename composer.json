@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Navarr": "Navarr"
+            "Navarr\\MinecraftAPI\\": "Navarr/"
         }
     }
 }
