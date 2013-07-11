@@ -6,10 +6,18 @@ use Navarr\MinecraftAPI\Exception\BadLoginException;
 use Navarr\MinecraftAPI\Exception\MigrationException;
 use Navarr\MinecraftAPI\Exception\BasicException;
 
+/**
+ * Class MinecraftAPI
+ * @package Navarr\MinecraftAPI
+ * @property string $username
+ * @property string $sessionID
+ * @property string $minecraftID
+ */
 class MinecraftAPI
 {
     protected $username;
     protected $sessionID;
+    protected $minecraftID;
 
     const API_URL = "https://login.minecraft.net/";
 
@@ -20,13 +28,27 @@ class MinecraftAPI
         }
     }
 
-    public function login($username, $password, $version = 13)
+    public function login($username, $password, $version = 14)
     {
-        $user = urlencode($username);
-        $pass = urlencode($password);
+        $postdata = http_build_query(
+            [
+                'user' => $username,
+                'version' => $version,
+                'password' => $password,
+            ]
+        );
+        $opts = [
+            'http' => [
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata,
+            ]
+        ];
+        $output = file_get_contents(static::API_URL, false, stream_context_create($opts));
 
-        $output = file_get_contents(static::API_URL . "?user={$user}&password={$pass}&version={$version}");
-
+        if (strpos($output, 'Bad Request') !== false || strpos($output, 'Old version') !== false) {
+            throw new \RuntimeException('API Out of Date');
+        }
         if (strpos($output, 'Bad login') !== false) {
             throw new BadLoginException();
         }
@@ -41,6 +63,7 @@ class MinecraftAPI
 
         $this->username = $values[2];
         $this->sessionID = $values[3];
+        $this->minecraftID = $values[4];
 
         return true;
     }
@@ -52,6 +75,9 @@ class MinecraftAPI
         }
         if ($var == 'sessionID') {
             return $this->sessionID;
+        }
+        if ($var == 'minecraftID') {
+            return $this->minecraftID;
         }
         return null;
     }
