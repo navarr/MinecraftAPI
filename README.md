@@ -3,6 +3,12 @@ MinecraftAPI
 
 An API for validating a user against Mojang's servers written in PHP
 
+## Installation
+
+Assuming you have [composer](http://www.getcomposer.org/),
+
+`php composer.phar require navarr/minecraft-api:2.*`
+
 ## How to use
 
 Using the MinecraftAPI is incredibly easy in PHP.  Assuming that you have it installed via composer,
@@ -33,6 +39,4 @@ Using the MinecraftAPI is incredibly easy in PHP.  Assuming that you have it ins
 
 ## License
 
-I, Navarr Barnier, release this program to the public domain - except where prohibited by law.  You may use this program in any
-way, shape, or form.  Sell it, I guess? Anything.  Credit would be nice, but is not required.  No warranty is expressed or
-implied in this code, and I am not to be held responsible for any issues that arise from it.
+MIT License (coming soon!)
