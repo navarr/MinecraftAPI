@@ -24,15 +24,15 @@ class MinecraftAPI
 
     const API_URL = 'https://authserver.mojang.com/authenticate';
 
-    public function __construct($username = null, $password = null, $proxies = null)
+    public function __construct($username = null, $password = null, $proxy = null)
     {
-        if(empty($proxies)) {
+        if(empty($proxy)) {
             if ($username !== null && $password !== null) {
                 $this->login($username, $password);
             }
         } else {
             if ($username !== null && $password !== null) {
-                $this->login($username, $password, $proxies);
+                $this->login($username, $password, $proxy);
             }
         }
     }
@@ -52,8 +52,8 @@ class MinecraftAPI
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, static::API_URL);
-        if(!empty($proxies)) {
-            curl_setopt($ch, CURLOPT_PROXY, $proxies[rand(0, count($proxies) - 1)]);
+        if(!empty($proxy)) {
+            curl_setopt($ch, CURLOPT_PROXY, $proxy);
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json']);
